@@ -55,6 +55,7 @@ Console.WriteLine();
 
 
 // Display peak memory statistics for the process.
+Console.WriteLine("ddddupa");
 Console.WriteLine($"  Peak physical memory usage : {peakWorkingSet / (8 * 1024)}KB");
 Console.WriteLine($"  Peak paged memory usage    : {peakPagedMem / (8 * 1024)}KB");
 Console.WriteLine($"  Peak virtual memory usage  : {peakVirtualMem / (8 * 1024)}KB");
