@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32228.430
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBrowserBenchmark", "WebBrowserBenchmark\WebBrowserBenchmark.csproj", "{EC541C71-E54F-4992-BD6D-AC87D0EFD060}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebBrowserBenchmark", "WebBrowserBenchmark\WebBrowserBenchmark.csproj", "{CD8B9C21-9AFA-4A79-8625-C4BC6E78500E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,15 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{EC541C71-E54F-4992-BD6D-AC87D0EFD060}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC541C71-E54F-4992-BD6D-AC87D0EFD060}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC541C71-E54F-4992-BD6D-AC87D0EFD060}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC541C71-E54F-4992-BD6D-AC87D0EFD060}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CD8B9C21-9AFA-4A79-8625-C4BC6E78500E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CD8B9C21-9AFA-4A79-8625-C4BC6E78500E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CD8B9C21-9AFA-4A79-8625-C4BC6E78500E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CD8B9C21-9AFA-4A79-8625-C4BC6E78500E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {5C6F392D-13A6-43E6-AA78-3EB902A26A88}
+		SolutionGuid = {EE86B559-0E0E-4AFA-B637-14FEF845DE49}
 	EndGlobalSection
 EndGlobal
