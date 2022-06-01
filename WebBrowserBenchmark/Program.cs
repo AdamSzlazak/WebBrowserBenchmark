@@ -1,5 +1,5 @@
 ﻿using System;
-using Selenium = OpenQA.Selenium;
+using OpenQA.Selenium;
 
 namespace WebBrowserBenchmark
 {
@@ -70,20 +70,36 @@ namespace WebBrowserBenchmark
             webEngineDirectory = webEngineDirectory.Remove(webEngineDirectory.Length - 36, 36) + "WebEngines";
 
             var edge = EdgeHelper.setEdge(webEngineDirectory);
+            string[] dupa = { "youtube", "instagram", "reddit" };
+            int sec = 5;
+            for (int i = 0; i < dupa.Length; i++)
+            {
+                EdgeHelper.openPage(edge, dupa[i]);
 
-            //EdgeHelper.openPage(edge, "youtube");
-            //EdgeHelper.acceptCookie(edge);
+                switch (dupa[i])
+                {
+                    case "youtube":
+                        Console.WriteLine("DUPA");
+                        EdgeHelper.acceptCookie(edge);
+                        System.Threading.Thread.Sleep(sec * 1000);
+                        break;
+                    case "instagram":
+                        EdgeHelper.acceptCookie(edge);
+                        EdgeHelper.logInToWebsite(edge);
+                        for (int j = 0; j < 10; j++)
+                        {
+                            EdgeHelper.performAction(edge);
+                        }
+                        System.Threading.Thread.Sleep(sec * 1000);
 
-            //void openWebsite
+                        break;
+                    default:
+                        break;
+                }
+            }
+            //void openWebsite  
+            edge.Quit();
         }
-
     }
+
 }
-Console.WriteLine();
-
-
-// Display peak memory statistics for the process.
-Console.WriteLine("ddddupa");
-Console.WriteLine($"  Peak physical memory usage : {peakWorkingSet / (8 * 1024)}KB");
-Console.WriteLine($"  Peak paged memory usage    : {peakPagedMem / (8 * 1024)}KB");
-Console.WriteLine($"  Peak virtual memory usage  : {peakVirtualMem / (8 * 1024)}KB");
