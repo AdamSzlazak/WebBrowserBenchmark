@@ -122,7 +122,9 @@ namespace WebBrowserBenchmark
             var firefox = FirefoxHelper.setFirefox(webEngineDirectory);
             string[] dupa = { "youtube", "instagram", "reddit" };
             int sec = 5;
-            for (int i = 0; i < dupa.Length; i++)
+
+
+            for (int i = 1; i < dupa.Length; i++)
             {
                 FirefoxHelper.openPage(firefox, dupa[i]);
 
@@ -131,6 +133,7 @@ namespace WebBrowserBenchmark
                     case "youtube":
                         Console.WriteLine("DUPA");
                         FirefoxHelper.acceptCookie(firefox);
+                        FirefoxHelper.performAction(firefox);
                         processValues("msedge", 5);
                         System.Threading.Thread.Sleep(sec * 1000);
                         break;
