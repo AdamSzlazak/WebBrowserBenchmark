@@ -39,39 +39,45 @@ namespace WebBrowserBenchmark
         public static void acceptCookie(Selenium.Edge.EdgeDriver edgeDriver)
         {
             string url = edgeDriver.Url;
+            System.Collections.ObjectModel.ReadOnlyCollection<Selenium.IWebElement> button;
             switch (url)
             {
                 case string a when a.Contains("youtube"):
-                    var button = edgeDriver.FindElement(Selenium.By.XPath("//*[@id='content']/div/div[6]/div[1]/ytd-button-renderer[2]/a"));
-                    while (button == null)
+                    button = edgeDriver.FindElements(Selenium.By.XPath("//*[@id='content']/div/div[6]/div[1]/ytd-button-renderer[2]/a"));
+                    while (button.Count == 0)
                     {
-                        button = edgeDriver.FindElement(Selenium.By.XPath("//*[@id='content']/div/div[6]/div[1]/ytd-button-renderer[2]/a"));
+                        button = edgeDriver.FindElements(Selenium.By.XPath("//*[@id='content']/div/div[6]/div[1]/ytd-button-renderer[2]/a"));
                     }
-                    button.Click();
+                    button[0].Click();
                     break;
                 case string a when a.Contains("instagram"):
-                    button = edgeDriver.FindElement(Selenium.By.XPath("/html/body/div[4]/div/div/button[2]"));
-                    if (button == null)
+                    button = edgeDriver.FindElements(Selenium.By.XPath("/html/body/div[4]/div/div/button[2]"));
+                    if (button.Count == 0)
                     {
-                        button = edgeDriver.FindElement(Selenium.By.XPath("/html/body/div[4]/div/div/button[2]"));
+                        button = edgeDriver.FindElements(Selenium.By.XPath("/html/body/div[4]/div/div/button[2]"));
                     }
-                    button.Click();
+                    button[0].Click();
                     break;
                 case string a when a.Contains("reddit"):
-                    button = edgeDriver.FindElement(Selenium.By.XPath("//*[@id='SHORTCUT_FOCUSABLE_DIV']/div[3]/div[1]/section/div/section/section/form[2]/button"));
-                    while (button == null)
+                    button = edgeDriver.FindElements(Selenium.By.XPath("//*[@id='SHORTCUT_FOCUSABLE_DIV']/div[3]/div[1]/section/div/section/section/form[2]/button"));
+                    while (button.Count == 0)
                     {
-                        button = edgeDriver.FindElement(Selenium.By.XPath("//*[@id='SHORTCUT_FOCUSABLE_DIV']/div[3]/div[1]/section/div/section/section/form[2]/button"));
+                        button = edgeDriver.FindElements(Selenium.By.XPath("//*[@id='SHORTCUT_FOCUSABLE_DIV']/div[3]/div[1]/section/div/section/section/form[2]/button"));
                     }
-                    button.Click();
+                    button[0].Click();
                     break;
                 default:
                     break;
             }
         }
+        public static void Test<T>(T driver)
+        {
+            Console.WriteLine(driver.GetType());
+        }
         public static void logInToWebsite(Selenium.Edge.EdgeDriver edgeDriver)
         {
             string url = edgeDriver.Url;
+            System.Collections.ObjectModel.ReadOnlyCollection<Selenium.IWebElement> button;
 
             switch (url)
             {
@@ -84,18 +90,15 @@ namespace WebBrowserBenchmark
                     edgeDriver.FindElement(Selenium.By.XPath("//*[@id='loginForm']/div/div[3]/button")).Click();
                     System.Threading.Thread.Sleep(2000);
 
-                    Selenium.IWebElement button = null;
-                    do
+                    button = edgeDriver.FindElements(Selenium.By.XPath("//*[@id='mount_0_0_Z8']/div/div[1]/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div/div/div/div[3]/button[1]"));
+
+
+                    if (button.Count == 0)
                     {
-                        button = //edgeDriver.FindElement(Selenium.By.XPath("//*[@id='mount_0_0_Z8']/div/div[1]/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div/div/div/div[3]/button[1]"));
-                    edgeDriver.FindElement(Selenium.By.LinkText("Nie teraz"));
+                        button = edgeDriver.FindElements(Selenium.By.XPath("//*[@id='mount_0_0_Z8']/div/div[1]/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div/div/div/div[3]/button[1]"));
                     }
-                    while (button == null);
-                    //{
-                    //    button = //edgeDriver.FindElement(Selenium.By.XPath("//*[@id='mount_0_0_H1']/div/div[1]/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div/div/div/div[3]/button[1]"));
-                    //        edgeDriver.FindElement(Selenium.By.LinkText("Nie teraz"));
-                    //}
-                    button.Click();
+
+                    button[0].Click();
                     break;
 
                 default:
