@@ -77,7 +77,7 @@ namespace WebBrowserBenchmark
                     }
                 } while (!myProcess[i].WaitForExit(2000));
             }
-    
+
 
         }
         static void Main(string[] args)
@@ -103,19 +103,20 @@ namespace WebBrowserBenchmark
                     case "instagram":
                         EdgeHelper.acceptCookie(edge);
                         EdgeHelper.logInToWebsite(edge);
-                        for (int j = 0; j < 10; j++)
-                        {
-                            EdgeHelper.performAction(edge);
-                        }
+                        EdgeHelper.performAction(edge);
                         processValues("msedge", 5);
                         System.Threading.Thread.Sleep(sec * 1000);
 
+                        break;
+                    case "reddit":
+                        EdgeHelper.acceptCookie(edge);
+                        EdgeHelper.performAction(edge);
                         break;
                     default:
                         break;
                 }
             }
-            
+
             //void openWebsite  
             edge.Quit();
         }
