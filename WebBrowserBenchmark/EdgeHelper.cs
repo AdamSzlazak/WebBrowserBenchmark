@@ -124,14 +124,12 @@ namespace WebBrowserBenchmark
                         Selenium.IJavaScriptExecutor js = (Selenium.IJavaScriptExecutor)edgeDriver;
                         js.ExecuteScript(String.Format("window.scrollTo({0},{1})", 0, 600));
                         System.Threading.Thread.Sleep(4000);
-                    }
-                    
+                    }                    
                     break;
 
                 default:
                     break;
             }
-
         }
     }
 }

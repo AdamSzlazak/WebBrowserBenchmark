@@ -85,40 +85,72 @@ namespace WebBrowserBenchmark
             string webEngineDirectory = System.IO.Directory.GetCurrentDirectory();
             webEngineDirectory = webEngineDirectory.Remove(webEngineDirectory.Length - 36, 36) + "WebEngines";
 
-            var edge = EdgeHelper.setEdge(webEngineDirectory);
+
+            //var edge = EdgeHelper.setEdge(webEngineDirectory);
+            //string[] dupa = { "youtube", "instagram", "reddit" };
+            //int sec = 5;
+            //for (int i = 0; i < dupa.Length; i++)
+            //{
+            //    EdgeHelper.openPage(edge, dupa[i]);
+
+            //    switch (dupa[i])
+            //    {
+            //        case "youtube":
+            //            Console.WriteLine("DUPA");
+            //            EdgeHelper.acceptCookie(edge);
+            //            processValues("msedge", 5);
+            //            System.Threading.Thread.Sleep(sec * 1000);
+            //            break;
+            //        case "instagram":
+            //            EdgeHelper.acceptCookie(edge);
+            //            EdgeHelper.logInToWebsite(edge);
+            //            EdgeHelper.performAction(edge);
+            //            processValues("msedge", 5);
+            //            System.Threading.Thread.Sleep(sec * 1000);
+
+            //            break;
+            //        case "reddit":
+            //            EdgeHelper.acceptCookie(edge);
+            //            EdgeHelper.performAction(edge);
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
+            //edge.Quit();
+
+            var firefox = FirefoxHelper.setFirefox(webEngineDirectory);
             string[] dupa = { "youtube", "instagram", "reddit" };
             int sec = 5;
             for (int i = 0; i < dupa.Length; i++)
             {
-                EdgeHelper.openPage(edge, dupa[i]);
+                FirefoxHelper.openPage(firefox, dupa[i]);
 
                 switch (dupa[i])
                 {
                     case "youtube":
                         Console.WriteLine("DUPA");
-                        EdgeHelper.acceptCookie(edge);
+                        FirefoxHelper.acceptCookie(firefox);
                         processValues("msedge", 5);
                         System.Threading.Thread.Sleep(sec * 1000);
                         break;
                     case "instagram":
-                        EdgeHelper.acceptCookie(edge);
-                        EdgeHelper.logInToWebsite(edge);
-                        EdgeHelper.performAction(edge);
+                        FirefoxHelper.acceptCookie(firefox);
+                        FirefoxHelper.logInToWebsite(firefox);
+                        FirefoxHelper.performAction(firefox);
                         processValues("msedge", 5);
                         System.Threading.Thread.Sleep(sec * 1000);
 
                         break;
                     case "reddit":
-                        EdgeHelper.acceptCookie(edge);
-                        EdgeHelper.performAction(edge);
+                        FirefoxHelper.acceptCookie(firefox);
+                        FirefoxHelper.performAction(firefox);
                         break;
                     default:
                         break;
                 }
             }
-
-            //void openWebsite  
-            edge.Quit();
+            firefox.Quit();
         }
     }
 
