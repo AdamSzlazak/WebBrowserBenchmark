@@ -12,7 +12,7 @@ namespace WebBrowserBenchmark
         public static void processValues(string processName, int time)
         {
             // variables to track memory usage
-            long peakPagedMem = 0, peakWorkingSet = 0, peakVirtualMem = 0;
+            long peakPagedMem = 0, peakWorkingSet = 0, peakVirtualMem = 0, physMemAverage = 0, pagedMemAverage = 0;
             int exitTime = 0;
             Process[] myProcess = Process.GetProcessesByName(processName);
             // Display the process statistics until
@@ -28,14 +28,18 @@ namespace WebBrowserBenchmark
                         Console.WriteLine($"{myProcess[i]}");
                         Console.WriteLine("--------------");
 
-                        Console.WriteLine($"  Physical memory usage     : {myProcess[i].WorkingSet64}");
-                        Console.WriteLine($"  Base priority             : {myProcess[i].BasePriority}");
-                        Console.WriteLine($"  Priority class            : {myProcess[i].PriorityClass}");
-                        Console.WriteLine($"  User processor time       : {myProcess[i].UserProcessorTime}");
-                        Console.WriteLine($"  Privileged processor time : {myProcess[i].PrivilegedProcessorTime}");
-                        Console.WriteLine($"  Total processor time      : {myProcess[i].TotalProcessorTime}");
-                        Console.WriteLine($"  Paged system memory size  : {myProcess[i].PagedSystemMemorySize64}");
-                        Console.WriteLine($"  Paged memory size         : {myProcess[i].PagedMemorySize64}");
+                        Console.WriteLine($"  Process ID                  : {myProcess[i].Id}");
+                        Console.WriteLine($"  Physical memory usage       : {myProcess[i].WorkingSet64 / (8 * 1024)}KB");
+                        Console.WriteLine($"  Base priority               : {myProcess[i].BasePriority}");
+                        Console.WriteLine($"  Priority class              : {myProcess[i].PriorityClass}");
+                        Console.WriteLine($"  User processor time         : {myProcess[i].UserProcessorTime}");
+                        Console.WriteLine($"  Privileged processor time   : {myProcess[i].PrivilegedProcessorTime}");
+                        Console.WriteLine($"  Total processor time        : {myProcess[i].TotalProcessorTime}");
+                        Console.WriteLine($"  Pageable system memory size : {myProcess[i].PagedSystemMemorySize64 / (8 * 1024)}KB");
+                        Console.WriteLine($"  Paged memory size           : {myProcess[i].PagedMemorySize64 / (8 * 1024)}KB");
+
+                        physMemAverage += myProcess[i].PeakWorkingSet64;
+                        pagedMemAverage += myProcess[i].PagedSystemMemorySize64;
 
                         if (peakPagedMem <= myProcess[i].PeakPagedMemorySize64)
                         {
@@ -64,6 +68,9 @@ namespace WebBrowserBenchmark
                             Console.WriteLine($"  Peak physical memory usage : {peakWorkingSet / (8 * 1024)}KB");
                             Console.WriteLine($"  Peak paged memory usage    : {peakPagedMem / (8 * 1024)}KB");
                             Console.WriteLine($"  Peak virtual memory usage  : {peakVirtualMem / (8 * 1024)}KB");
+                            Console.WriteLine($"  Average physical memory usage in {time} seconds : {physMemAverage / time / (8 * 1024)}KB");
+                            Console.WriteLine($"  Average physical memory usage in {time} seconds : {pagedMemAverage / time / (8 * 1024)}KB");
+                            Console.WriteLine($"  Total processor time        : {myProcess[i].TotalProcessorTime}");
                             Console.WriteLine();
                             return;
                         }
