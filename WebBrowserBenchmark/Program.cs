@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using OpenQA.Selenium;
 using System.Diagnostics;
 namespace WebBrowserBenchmark
@@ -9,7 +10,7 @@ namespace WebBrowserBenchmark
         {
             processName.Kill();
         }
-        public static void processValues(string processName, int time)
+        public static void processValues(string processName, int time, string site)
         {
             // variables to track memory usage
             long peakPagedMem = 0, peakWorkingSet = 0, peakVirtualMem = 0, physMemAverage = 0, pagedMemAverage = 0;
@@ -65,13 +66,27 @@ namespace WebBrowserBenchmark
                         exitTime += 1;
                         if (exitTime == time)
                         {
+                            Console.WriteLine();
                             Console.WriteLine($"  Peak physical memory usage : {peakWorkingSet / (8 * 1024)}KB");
                             Console.WriteLine($"  Peak paged memory usage    : {peakPagedMem / (8 * 1024)}KB");
                             Console.WriteLine($"  Peak virtual memory usage  : {peakVirtualMem / (8 * 1024)}KB");
                             Console.WriteLine($"  Average physical memory usage in {time} seconds : {physMemAverage / time / (8 * 1024)}KB");
-                            Console.WriteLine($"  Average physical memory usage in {time} seconds : {pagedMemAverage / time / (8 * 1024)}KB");
+                            Console.WriteLine($"  Average paged memory usage in {time} seconds : {pagedMemAverage / time / (8 * 1024)}KB");
                             Console.WriteLine($"  Total processor time        : {myProcess[i].TotalProcessorTime}");
                             Console.WriteLine();
+                            string path = @"C:\asd\" + processName + "_" + site + ".txt";
+                            if (!File.Exists(path))
+                            {
+                                using (StreamWriter sw = File.CreateText(path))
+                                {
+                                    sw.WriteLine($"Peak physical memory usage : {peakWorkingSet / (8 * 1024)}KB");
+                                    sw.WriteLine($"Peak paged memory usage    : {peakPagedMem / (8 * 1024)}KB");
+                                    sw.WriteLine($"Peak virtual memory usage  : {peakVirtualMem / (8 * 1024)}KB");
+                                    sw.WriteLine($"Average physical memory usage in {time} seconds : {physMemAverage / time / (8 * 1024)}KB");
+                                    sw.WriteLine($"Average paged memory usage in {time} seconds : {pagedMemAverage / time / (8 * 1024)}KB");
+                                    sw.WriteLine($"Total processor time        : {myProcess[i].TotalProcessorTime}");
+                                }
+                            }
                             return;
                         }
                     }
@@ -85,69 +100,65 @@ namespace WebBrowserBenchmark
             string webEngineDirectory = System.IO.Directory.GetCurrentDirectory();
             webEngineDirectory = webEngineDirectory.Remove(webEngineDirectory.Length - 36, 36) + "WebEngines";
 
-
-            //var edge = EdgeHelper.setEdge(webEngineDirectory);
-            //string[] dupa = { "youtube", "instagram", "reddit" };
-            //int sec = 5;
-            //for (int i = 0; i < dupa.Length; i++)
-            //{
-            //    EdgeHelper.openPage(edge, dupa[i]);
-
-            //    switch (dupa[i])
-            //    {
-            //        case "youtube":
-            //            Console.WriteLine("DUPA");
-            //            EdgeHelper.acceptCookie(edge);
-            //            processValues("msedge", 5);
-            //            System.Threading.Thread.Sleep(sec * 1000);
-            //            break;
-            //        case "instagram":
-            //            EdgeHelper.acceptCookie(edge);
-            //            EdgeHelper.logInToWebsite(edge);
-            //            EdgeHelper.performAction(edge);
-            //            processValues("msedge", 5);
-            //            System.Threading.Thread.Sleep(sec * 1000);
-
-            //            break;
-            //        case "reddit":
-            //            EdgeHelper.acceptCookie(edge);
-            //            EdgeHelper.performAction(edge);
-            //            break;
-            //        default:
-            //            break;
-            //    }
-            //}
-            //edge.Quit();
-
-            var firefox = FirefoxHelper.setFirefox(webEngineDirectory);
-            string[] dupa = { "youtube", "instagram", "reddit" };
-            int sec = 5;
-
-
-            for (int i = 1; i < dupa.Length; i++)
+            var edge = EdgeHelper.setEdge(webEngineDirectory);
+            string[] sites = { "youtube", "instagram", "reddit" };
+            int sec = 30;
+            for (int i = 0; i < sites.Length; i++)
             {
-                FirefoxHelper.openPage(firefox, dupa[i]);
+                EdgeHelper.openPage(edge, sites[i]);
 
-                switch (dupa[i])
+                switch (sites[i])
                 {
                     case "youtube":
-                        Console.WriteLine("DUPA");
-                        FirefoxHelper.acceptCookie(firefox);
-                        FirefoxHelper.performAction(firefox);
-                        processValues("msedge", 5);
+                        EdgeHelper.acceptCookie(edge);
+                        processValues("msedge", sec, sites[i]);
                         System.Threading.Thread.Sleep(sec * 1000);
                         break;
-                    case "instagram":
-                        FirefoxHelper.acceptCookie(firefox);
-                        FirefoxHelper.logInToWebsite(firefox);
-                        FirefoxHelper.performAction(firefox);
-                        processValues("msedge", 5);
-                        System.Threading.Thread.Sleep(sec * 1000);
+                    //case "instagram":
+                    //    EdgeHelper.acceptCookie(edge);
+                    //    EdgeHelper.logInToWebsite(edge);
+                    //    EdgeHelper.performAction(edge);
+                    //    processValues("msedge", sec, sites[i]);
+                    //    System.Threading.Thread.Sleep(sec * 1000);
 
+                    //    break;
+                    case "reddit":
+                        EdgeHelper.acceptCookie(edge);
+                        EdgeHelper.performAction(edge);
+                        processValues("msedge", sec, sites[i]);
+                        System.Threading.Thread.Sleep(sec * 1000);
                         break;
+                    default:
+                        break;
+                }
+            }
+            edge.Quit();
+
+            var firefox = FirefoxHelper.setFirefox(webEngineDirectory);
+            for (int i = 0; i < sites.Length; i++)
+            {
+                FirefoxHelper.openPage(firefox, sites[i]);
+
+                switch (sites[i])
+                {
+                    case "youtube":
+                        FirefoxHelper.acceptCookie(firefox);
+                        processValues("firefox", sec, sites[i]);
+                        System.Threading.Thread.Sleep(sec * 1000);
+                        break;
+                    //case "instagram":
+                    //    FirefoxHelper.acceptCookie(firefox);
+                    //    FirefoxHelper.logInToWebsite(firefox);
+                    //    FirefoxHelper.performAction(firefox);
+                    //    processValues("firefox", sec, sites[i]);
+                    //    System.Threading.Thread.Sleep(sec * 1000);
+
+                    //    break;
                     case "reddit":
                         FirefoxHelper.acceptCookie(firefox);
                         FirefoxHelper.performAction(firefox);
+                        processValues("firefox", sec, sites[i]);
+                        System.Threading.Thread.Sleep(sec * 1000);
                         break;
                     default:
                         break;
