@@ -52,7 +52,7 @@ namespace WebBrowserBenchmark
                     break;
                 case string a when a.Contains("instagram"):
                     button = edgeDriver.FindElements(Selenium.By.XPath("/html/body/div[4]/div/div/button[2]"));
-                    if (button.Count == 0)
+                    while (button.Count == 0)
                     {
                         button = edgeDriver.FindElements(Selenium.By.XPath("/html/body/div[4]/div/div/button[2]"));
                     }
@@ -84,17 +84,17 @@ namespace WebBrowserBenchmark
                     edgeDriver.FindElement(Selenium.By.XPath("//*[@id='loginForm']/div/div[2]/div/label/input")).SendKeys(password);
 
                     button = edgeDriver.FindElements(Selenium.By.XPath("//*[@id='loginForm']/div/div[3]/button"));
-                    if (button.Count == 0)
+                    while (button.Count == 0)
                     {
                         button = edgeDriver.FindElements(Selenium.By.XPath("//*[@id='loginForm']/div/div[3]/button"));
                     }
-                    System.Threading.Thread.Sleep(1000);
+                    System.Threading.Thread.Sleep(2000);
                     button[0].Click();
 
-                    System.Threading.Thread.Sleep(3000);
+                    //System.Threading.Thread.Sleep(3000);
                     button = edgeDriver.FindElements(Selenium.By.XPath("/html/body/div[1]/div/div[1]/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div/div/div/div[3]/button[2]"));
 
-                    if (button.Count == 0)
+                    while (button.Count == 0)
                     {
                         button = edgeDriver.FindElements(Selenium.By.XPath("/html/body/div[1]/div/div[1]/div/div[2]/div/div/div[1]/div/div[2]/div/div/div/div/div/div/div/div[3]/button[2]"));
                     }
@@ -112,18 +112,21 @@ namespace WebBrowserBenchmark
             {
                 case string a when a.Contains("instagram"):
                     var elements = edgeDriver.FindElements(Selenium.By.XPath("//button[@class = '_aam8']"));
-                    if (elements.Count == 0)
+                    while (elements.Count == 0)
                     {
                         elements = edgeDriver.FindElements(Selenium.By.XPath("//button[@class = '_aam8']"));
                     }
+                    //System.Threading.Thread.Sleep (1000);
                     elements[0].Click();
                     break;
                 case string a when a.Contains("reddit"):
+                    int toScroll = 200;
                     for (int i = 0; i < 20; i++)
                     {
                         Selenium.IJavaScriptExecutor js = (Selenium.IJavaScriptExecutor)edgeDriver;
-                        js.ExecuteScript(String.Format("window.scrollTo({0},{1})", 0, 600));
-                        System.Threading.Thread.Sleep(4000);
+                        js.ExecuteScript(String.Format("window.scrollTo({0},{1})", 0, toScroll));
+                        toScroll += 200;
+                        System.Threading.Thread.Sleep(100);
                     }                    
                     break;
 

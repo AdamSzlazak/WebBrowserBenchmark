@@ -74,6 +74,7 @@ namespace WebBrowserBenchmark
                             Console.WriteLine($"  Average paged memory usage in {time} seconds : {pagedMemAverage / time / (8 * 1024)}KB");
                             Console.WriteLine($"  Total processor time        : {myProcess[i].TotalProcessorTime}");
                             Console.WriteLine();
+
                             string path = @"C:\asd\" + processName + "_" + site + ".txt";
                             if (!File.Exists(path))
                             {
@@ -102,7 +103,7 @@ namespace WebBrowserBenchmark
 
             var edge = EdgeHelper.setEdge(webEngineDirectory);
             string[] sites = { "youtube", "instagram", "reddit" };
-            int sec = 30;
+            int sec = 2;
             for (int i = 0; i < sites.Length; i++)
             {
                 EdgeHelper.openPage(edge, sites[i]);
@@ -114,14 +115,14 @@ namespace WebBrowserBenchmark
                         processValues("msedge", sec, sites[i]);
                         System.Threading.Thread.Sleep(sec * 1000);
                         break;
-                    //case "instagram":
-                    //    EdgeHelper.acceptCookie(edge);
-                    //    EdgeHelper.logInToWebsite(edge);
-                    //    EdgeHelper.performAction(edge);
-                    //    processValues("msedge", sec, sites[i]);
-                    //    System.Threading.Thread.Sleep(sec * 1000);
+                    case "instagram":
+                        EdgeHelper.acceptCookie(edge);
+                        EdgeHelper.logInToWebsite(edge);
+                        EdgeHelper.performAction(edge);
+                        processValues("msedge", sec, sites[i]);
+                        System.Threading.Thread.Sleep(sec * 1000);
 
-                    //    break;
+                        break;
                     case "reddit":
                         EdgeHelper.acceptCookie(edge);
                         EdgeHelper.performAction(edge);
@@ -146,14 +147,14 @@ namespace WebBrowserBenchmark
                         processValues("firefox", sec, sites[i]);
                         System.Threading.Thread.Sleep(sec * 1000);
                         break;
-                    //case "instagram":
-                    //    FirefoxHelper.acceptCookie(firefox);
-                    //    FirefoxHelper.logInToWebsite(firefox);
-                    //    FirefoxHelper.performAction(firefox);
-                    //    processValues("firefox", sec, sites[i]);
-                    //    System.Threading.Thread.Sleep(sec * 1000);
+                    case "instagram":
+                        FirefoxHelper.acceptCookie(firefox);
+                        FirefoxHelper.logInToWebsite(firefox);
+                        FirefoxHelper.performAction(firefox);
+                        processValues("firefox", sec, sites[i]);
+                        System.Threading.Thread.Sleep(sec * 1000);
 
-                    //    break;
+                        break;
                     case "reddit":
                         FirefoxHelper.acceptCookie(firefox);
                         FirefoxHelper.performAction(firefox);
