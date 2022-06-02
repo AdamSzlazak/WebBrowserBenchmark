@@ -100,10 +100,11 @@ namespace WebBrowserBenchmark
         {
             string webEngineDirectory = System.IO.Directory.GetCurrentDirectory();
             webEngineDirectory = webEngineDirectory.Remove(webEngineDirectory.Length - 36, 36) + "WebEngines";
+            string[] sites = { "youtube", "instagram", "reddit" };
+            int sec = 120;
+
 
             var edge = EdgeHelper.setEdge(webEngineDirectory);
-            string[] sites = { "youtube", "instagram", "reddit" };
-            int sec = 2;
             for (int i = 0; i < sites.Length; i++)
             {
                 EdgeHelper.openPage(edge, sites[i]);
@@ -166,7 +167,38 @@ namespace WebBrowserBenchmark
                 }
             }
             firefox.Quit();
+
+            var chrome = ChromeHelper.setChrome(webEngineDirectory);
+            for (int i = 0; i < sites.Length; i++)
+            {
+                ChromeHelper.openPage(chrome, sites[i]);
+
+                switch (sites[i])
+                {
+                    case "youtube":
+                        ChromeHelper.acceptCookie(chrome);
+                        processValues("chrome", sec, sites[i]);
+                        System.Threading.Thread.Sleep(sec * 1000);
+                        break;
+                    case "instagram":
+                        ChromeHelper.acceptCookie(chrome);
+                        ChromeHelper.logInToWebsite(chrome);
+                        ChromeHelper.performAction(chrome);
+                        processValues("chrome", sec, sites[i]);
+                        System.Threading.Thread.Sleep(sec * 1000);
+
+                        break;
+                    case "reddit":
+                        ChromeHelper.acceptCookie(chrome);
+                        ChromeHelper.performAction(chrome);
+                        processValues("chrome", sec, sites[i]);
+                        System.Threading.Thread.Sleep(sec * 1000);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            chrome.Quit();
         }
     }
-
 }

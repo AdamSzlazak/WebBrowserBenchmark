@@ -121,7 +121,7 @@ namespace WebBrowserBenchmark
                     break;
                 case string a when a.Contains("reddit"):
                     int toScroll = 200;
-                    for (int i = 0; i < 20; i++)
+                    for (int i = 0; i < 100; i++)
                     {
                         Selenium.IJavaScriptExecutor js = (Selenium.IJavaScriptExecutor)edgeDriver;
                         js.ExecuteScript(String.Format("window.scrollTo({0},{1})", 0, toScroll));

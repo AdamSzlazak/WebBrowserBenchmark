@@ -9,13 +9,10 @@ namespace WebBrowserBenchmark
 {
     internal class FirefoxHelper
     {
-
         public static Selenium.Firefox.FirefoxDriver setFirefox(string webEngineDirectory)
         {
             var firefoxEngine = new Selenium.Firefox.FirefoxOptions() { BrowserExecutableLocation = webEngineDirectory };
             Selenium.Firefox.FirefoxDriver firefoxDriver = new Selenium.Firefox.FirefoxDriver(webEngineDirectory);
-
-
             return firefoxDriver;
         }
         public static void openPage(Selenium.Firefox.FirefoxDriver firefoxDriver, string pageName)
@@ -77,7 +74,6 @@ namespace WebBrowserBenchmark
         {
             string url = firefoxDriver.Url;
             System.Collections.ObjectModel.ReadOnlyCollection<Selenium.IWebElement> button;
-
             switch (url)
             {
                 case string a when a.Contains("instagram"):
@@ -105,14 +101,12 @@ namespace WebBrowserBenchmark
                     }
                     button[0].Click();
                     break;
-
                 default:
                     break;
             }
         }
         public static void performAction(Selenium.Firefox.FirefoxDriver firefoxDriver)
         {
-            //scroll
             string url = firefoxDriver.Url;
             switch (url)
             {
@@ -126,7 +120,7 @@ namespace WebBrowserBenchmark
                     break;
                 case string a when a.Contains("reddit"):
                     int toScroll = 200;
-                    for (int i = 0; i < 20; i++)
+                    for (int i = 0; i < 100; i++)
                     {
                         Selenium.IJavaScriptExecutor js = (Selenium.IJavaScriptExecutor)firefoxDriver;
                         js.ExecuteScript(String.Format("window.scrollTo({0},{1})", 0, toScroll));
